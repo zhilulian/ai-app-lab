@@ -29,7 +29,7 @@ class ArkToolResponse(BaseModel):
     data: Any | None = None
 
 
-async def link_reader(url_list: list[str]):
+async def link_reader(url_list: list[str]) -> ArkToolResponse:
     """
     当你需要获取网页、pdf、抖音视频内容时，使用此工具。可以获取url链接下的标题和内容。
 
@@ -50,7 +50,7 @@ async def link_reader(url_list: list[str]):
     return response
 
 
-async def main():
+async def main() -> None:
     # human in the loop example
     ctx = Context(model="doubao-1.5-pro-32k-250115", tools=[link_reader])
     await ctx.init()

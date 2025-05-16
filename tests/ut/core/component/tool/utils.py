@@ -14,6 +14,9 @@
 
 from arkitect.core.component.tool.mcp_client import MCPClient
 from arkitect.core.component.tool.tool_pool import ToolPool
+from arkitect.core.component.tool.utils import (
+    convert_to_chat_completion_content_part_param,
+)
 from dummy_mcp_server import server
 from dummy_mcp_server_http_streamable import server as http_streamable_server
 
@@ -28,7 +31,9 @@ async def check_server_working(
     assert len(tools) == len(expected_tools)
     for t in expected_tools:
         output = await client.execute_tool(t, expected_tools.get(t).get("input"))
-        assert output == expected_tools.get(t).get("output")
+        converted = convert_to_chat_completion_content_part_param(output)
+        print(converted)
+        assert converted == expected_tools.get(t).get("output")
     return True
 
 
